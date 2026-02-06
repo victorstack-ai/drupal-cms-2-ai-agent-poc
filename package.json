@@ -1,0 +1,30 @@
+{
+  "name": "drupal-cms-2-ai-agent-poc",
+  "version": "0.1.0",
+  "description": "POC AI agent that uses Drupal CMS 2.0 JSON:API endpoints.",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "demo": "node src/index.js \"list content types\"",
+    "lint": "eslint .",
+    "test": "mocha \"tests/**/*.test.js\""
+  },
+  "engines": {
+    "node": ">=14.17.0"
+  },
+  "keywords": [
+    "drupal",
+    "jsonapi",
+    "agent",
+    "ai"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^4.4.1",
+    "eslint": "^8.56.0",
+    "mocha": "^10.4.0",
+    "nock": "^13.5.4",
+    "node-fetch": "^3.3.2"
+  }
+}
