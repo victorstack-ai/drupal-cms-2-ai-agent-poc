@@ -1,7 +1,7 @@
 import { createDrupalClient } from './drupalClient.js';
 import { createDrupalTools } from './actions.js';
 import { DrupalCmsAgent } from './agent.js';
-import { createRuleBasedPlanner } from './ruleBasedPlanner.js';
+import { createOpenAiPlanner } from './openAiPlanner.js';
 
 const goal = process.argv.slice(2).join(' ').trim();
 
@@ -12,6 +12,8 @@ if (!goal) {
 
 const baseUrl = process.env.DRUPAL_BASE_URL || 'http://localhost';
 const token = process.env.DRUPAL_TOKEN || '';
+const openAiApiKey = process.env.OPENAI_API_KEY || '';
+const openAiModel = process.env.OPENAI_MODEL || 'o3-mini';
 
 const client = createDrupalClient({
   baseUrl,
@@ -22,7 +24,10 @@ const client = createDrupalClient({
 const tools = createDrupalTools(client);
 const agent = new DrupalCmsAgent({
   tools,
-  model: createRuleBasedPlanner()
+  model: createOpenAiPlanner({
+    apiKey: openAiApiKey,
+    model: openAiModel
+  })
 });
 
 try {

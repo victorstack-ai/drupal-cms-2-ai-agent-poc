@@ -6,7 +6,7 @@ Small proof-of-concept agent that uses Drupal CMS 2.0 JSON:API endpoints (the sa
 
 - Uses Drupal JSON:API entrypoint (`/jsonapi`) to discover content types.
 - Lists nodes or creates draft articles via JSON:API.
-- Provides a tiny rule-based planner to decide which tool to run.
+- Connects to OpenAI `o3-mini` for planning and falls back to a local rule-based planner.
 
 ## Quick start
 
@@ -14,6 +14,8 @@ Small proof-of-concept agent that uses Drupal CMS 2.0 JSON:API endpoints (the sa
 npm install
 DRUPAL_BASE_URL=https://your-drupal-site \
 DRUPAL_TOKEN=your_bearer_token \
+OPENAI_API_KEY=your_openai_key \
+OPENAI_MODEL=o3-mini \
 node src/index.js "list content types"
 ```
 
@@ -27,7 +29,8 @@ node src/index.js "create draft article title: \"AI notes\""
 ## Notes
 
 - For authenticated writes, provide a token via `DRUPAL_TOKEN`.
-- The POC is designed to be minimal and easy to extend with a real LLM planner.
+- If `OPENAI_API_KEY` is missing, planning falls back to local rules.
+- Maintained Drupal modules already exist for in-Drupal AI workflows (for example, the Drupal AI ecosystem on drupal.org). This POC stays custom because it solves a different problem: an external agent connector that plans tasks and executes JSON:API actions from outside Drupal runtime.
 
 ## License
 
