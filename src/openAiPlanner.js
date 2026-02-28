@@ -2,7 +2,17 @@ import fetch from 'node-fetch';
 import { createRuleBasedPlanner } from './ruleBasedPlanner.js';
 
 const OPENAI_URL = 'https://api.openai.com/v1/chat/completions';
-const ALLOWED_TOOLS = new Set(['listContentTypes', 'listNodes', 'createNode', 'createTaxonomyTerm']);
+const ALLOWED_TOOLS = new Set([
+  'listContentTypes',
+  'listNodes',
+  'createNode',
+  'updateNode',
+  'deleteNode',
+  'listUsers',
+  'listTaxonomyTerms',
+  'createTaxonomyTerm',
+  'uploadMedia'
+]);
 
 function extractJsonObject(text) {
   const trimmed = String(text || '').trim();
@@ -59,7 +69,7 @@ export function createOpenAiPlanner({
             {
               role: 'system',
               content:
-                'You are a planner for a Drupal CMS JSON:API agent. Return strict JSON only with shape {"steps":[{"tool":"listContentTypes|listNodes|createNode|createTaxonomyTerm","args":[]}]}.'
+                'You are a planner for a Drupal CMS JSON:API agent. Return strict JSON only with shape {"steps":[{"tool":"<tool>","args":[]}]}. Available tools: listContentTypes, listNodes, createNode, updateNode, deleteNode, listUsers, listTaxonomyTerms, createTaxonomyTerm, uploadMedia.'
             },
             {
               role: 'user',
